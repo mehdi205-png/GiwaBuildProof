@@ -1,0 +1,49 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_34-2755c7c9792f1866c772cf9a1aa6c145bc9440b6",
+  "solcVersion": "0.8.34",
+  "solcLongVersion": "0.8.34+commit.80d5c536",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.16.0"
+  },
+  "userSourceNameMap": {
+    "contracts/GiwaBuildProof.sol": "project/contracts/GiwaBuildProof.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "osaka",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/GiwaBuildProof.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.34;\r\n\r\ncontract GiwaBuildProof {\r\n    struct Project {\r\n        address owner;\r\n        string name;\r\n        string repo;\r\n        uint64 createdAt;\r\n        bool exists;\r\n    }\r\n\r\n    struct Milestone {\r\n        bytes32 artifactHash;\r\n        string uri;\r\n        uint64 recordedAt;\r\n    }\r\n\r\n    uint256 public nextProjectId;\r\n\r\n    mapping(uint256 => Project) public projects;\r\n    mapping(uint256 => Milestone[]) private milestones;\r\n\r\n    event ProjectRegistered(\r\n        uint256 indexed projectId,\r\n        address indexed owner,\r\n        string name,\r\n        string repo\r\n    );\r\n\r\n    event MilestoneRecorded(\r\n        uint256 indexed projectId,\r\n        uint256 indexed milestoneId,\r\n        bytes32 artifactHash,\r\n        string uri\r\n    );\r\n\r\n    modifier onlyProjectOwner(uint256 projectId) {\r\n        require(projects[projectId].exists, \"project does not exist\");\r\n        require(\r\n            projects[projectId].owner == msg.sender,\r\n            \"not project owner\"\r\n        );\r\n        _;\r\n    }\r\n\r\n    function registerProject(\r\n        string calldata name,\r\n        string calldata repo\r\n    ) external returns (uint256 projectId) {\r\n        require(bytes(name).length > 0, \"name required\");\r\n\r\n        projectId = ++nextProjectId;\r\n\r\n        projects[projectId] = Project({\r\n            owner: msg.sender,\r\n            name: name,\r\n            repo: repo,\r\n            createdAt: uint64(block.timestamp),\r\n            exists: true\r\n        });\r\n\r\n        emit ProjectRegistered(\r\n            projectId,\r\n            msg.sender,\r\n            name,\r\n            repo\r\n        );\r\n    }\r\n\r\n    function recordMilestone(\r\n        uint256 projectId,\r\n        bytes32 artifactHash,\r\n        string calldata uri\r\n    )\r\n        external\r\n        onlyProjectOwner(projectId)\r\n        returns (uint256 milestoneId)\r\n    {\r\n        milestoneId = milestones[projectId].length;\r\n\r\n        milestones[projectId].push(\r\n            Milestone({\r\n                artifactHash: artifactHash,\r\n                uri: uri,\r\n                recordedAt: uint64(block.timestamp)\r\n            })\r\n        );\r\n\r\n        emit MilestoneRecorded(\r\n            projectId,\r\n            milestoneId,\r\n            artifactHash,\r\n            uri\r\n        );\r\n    }\r\n\r\n    function milestoneCount(\r\n        uint256 projectId\r\n    ) external view returns (uint256) {\r\n        return milestones[projectId].length;\r\n    }\r\n\r\n    function getMilestone(\r\n        uint256 projectId,\r\n        uint256 milestoneId\r\n    ) external view returns (Milestone memory) {\r\n        require(\r\n            milestoneId < milestones[projectId].length,\r\n            \"milestone does not exist\"\r\n        );\r\n\r\n        return milestones[projectId][milestoneId];\r\n    }\r\n\r\n    function getMilestones(\r\n        uint256 projectId\r\n    ) external view returns (Milestone[] memory) {\r\n        return milestones[projectId];\r\n    }\r\n}"
+      }
+    }
+  }
+}
