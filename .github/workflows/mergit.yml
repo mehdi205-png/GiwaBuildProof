@@ -2,12 +2,16 @@ name: Mergit
 
 on:
   push:
-    branches:
-      - master
+    branches: [main]
   workflow_run:
-    workflows: ["*"]
-    types:
-      - completed
+    workflows: [CI]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: "Pull request number to settle"
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -15,8 +19,11 @@ permissions:
   statuses: read
   pull-requests: write
 
+concurrency:
+  group: mergit-settle
+
 jobs:
-  mergit:
+  settle:
     runs-on: ubuntu-latest
     steps:
       - uses: odiseo159-beep/mergit@v1
