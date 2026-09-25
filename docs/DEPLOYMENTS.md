@@ -68,3 +68,6 @@ The contracts were developed as a progressive on-chain proof and contribution in
 - Attestation
 
 This inventory is intended to make the project's on-chain development history easier to inspect and verify.
+## Documentation Tracking
+
+This deployment inventory is maintained as part of GitHub Issue #1.
