@@ -22,3 +22,8 @@ The current integration test uses Mergit Bounty #6 on GIWA Sepolia.
 ## Repository
 
 https://github.com/mehdi205-png/GiwaBuildProof
+## CI Verification
+
+The repository uses a GitHub Actions CI workflow to compile the Hardhat project.
+
+A pull request associated with a Mergit bounty must have a successful CI run on its head commit before settlement.
