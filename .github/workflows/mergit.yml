@@ -1,14 +1,24 @@
 name: Mergit
 
 on:
-  pull_request:
-    types: [closed]
+  push:
+    branches:
+      - master
+  workflow_run:
+    workflows: ["*"]
+    types:
+      - completed
+
+permissions:
+  contents: read
+  checks: read
+  statuses: read
+  pull-requests: write
 
 jobs:
   mergit:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: odiseo159-beep/mergit@v1
         with:
-          verifier-key: ${{ secrets.MERGIT_VERIFIER_KEY }}
+          agent-key: ${{ secrets.MERGIT_AGENT_KEY }}
