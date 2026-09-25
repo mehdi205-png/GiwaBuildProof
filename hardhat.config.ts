@@ -1,6 +1,6 @@
 import hardhatToolboxViemPlugin from "@nomicfoundation/hardhat-toolbox-viem";
 import hardhatVerify from "@nomicfoundation/hardhat-verify";
-import { configVariable, defineConfig } from "hardhat/config";
+import { defineConfig } from "hardhat/config";
 import "dotenv/config";
 
 export default defineConfig({
@@ -38,7 +38,7 @@ export default defineConfig({
       type: "http",
       chainType: "op",
       url: "https://sepolia-rpc.giwa.io",
-      accounts: [process.env.PRIVATE_KEY as string],
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
   },
 
