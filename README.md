@@ -54,4 +54,4 @@ After setting the variable, you can run the deployment with the Sepolia network:
 
 ```shell
 npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
-```
+```Mergit: my GitHub account mehdi205-png is claimed by 0x7d7b8c3a114090dfaf705d54316479efa12e7cd4 on GIWA Chain.
