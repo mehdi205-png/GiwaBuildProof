@@ -1,57 +1,72 @@
-# Sample Hardhat 3 Project (`node:test` and `viem`)
+# GiwaBuildProof
 
-This project showcases a Hardhat 3 project using the native Node.js test runner (`node:test`) and the `viem` library for Ethereum interactions.
+A technical on-chain proof and verification project deployed on **GIWA Sepolia**.
 
-To learn more about Hardhat 3, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3](https://hardhat.org/hardhat3-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+The project demonstrates a progression of smart-contract development for project registration, versioning, verification, contribution tracking, reputation, and attestations.
 
-## Project Overview
+## Network
 
-This example project includes:
+- Network: GIWA Sepolia
+- Chain ID: 91342
+- Explorer: https://sepolia-explorer.giwa.io
+- Repository: https://github.com/mehdi205-png/GiwaBuildProof
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using [`node:test`](nodejs.org/api/test.html), the new Node.js native test runner, and [`viem`](https://viem.sh/).
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+## Deployed Contracts
 
-## Usage
+| Version | Contract | Address | Purpose |
+|---|---|---|---|
+| V1 | GiwaBuildProof | `0xd147597dEF40f925Cb69E81dedf233B182f10A5F` | Project registration and milestone proof |
+| V2 | GiwaProofRegistry | `0x7AA31d62cB54A754376c148B366860B40081216` | Projects, versions and milestones |
+| V3 | GiwaVerificationLayer | `0x236F84D6c6280d4C00EC4F7a94B437a0877F8D4D` | On-chain verification records |
+| V4 | GiwaContributorRegistry | `0xE29c1d5A8824F428898f3A0b1276d2717Fa176e6` | Contributor and contribution registry |
+| V5 | GiwaReputationRegistry | `0xfdb030576F7eB5A0D1E60D270e562121f8acf46c` | Contributor reputation records |
+| V6 | GiwaAttestationRegistry | `0x021a10Dd41be93B83FD4E2738F251Ada43Ebca82` | Technical artifact attestations |
 
-### Running Tests
+## Development Progression
 
-To run all the tests in the project, execute the following command:
+### V1 — GiwaBuildProof
+Basic project registration and milestone recording.
 
-```shell
-npx hardhat test
-```
+### V2 — GiwaProofRegistry
+Extended the system with project versions, milestones and ownership controls.
 
-You can also selectively run the Solidity or `node:test` tests:
+### V3 — GiwaVerificationLayer
+Added on-chain verification records linked to projects and versions.
 
-```shell
-npx hardhat test solidity
-npx hardhat test nodejs
-```
+### V4 — GiwaContributorRegistry
+Added contributor registration and contribution tracking.
 
-### Make a deployment to Sepolia
+### V5 — GiwaReputationRegistry
+Added reputation records for contributors and projects.
 
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
+### V6 — GiwaAttestationRegistry
+Added technical artifact attestations containing artifact hashes, verification status and notes.
 
-To run the deployment to a local chain:
+## Mergit Pay-on-Merge
 
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
-```
+The project also includes a working Mergit integration on GIWA Sepolia.
 
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
+Workflow:
 
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
+1. GitHub Issue defines the work.
+2. An on-chain Mergit bounty is funded.
+3. A pull request references the bounty.
+4. GitHub CI verifies the project.
+5. The pull request is merged.
+6. Mergit verifies the merge and settles the bounty on-chain.
 
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
+### Completed Mergit Test
 
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-```
+- Bounty: #6
+- Amount: 0.0005 ETH
+- Paid to developer: 0.0004925 ETH
+- Network: GIWA Sepolia
+- Settlement transaction:
 
-After setting the variable, you can run the deployment with the Sepolia network:
+https://sepolia-explorer.giwa.io/tx/0xa60555912e662bc22ef928d8bde7e885316fe47664ea749cd3b1ae14e8f4c279
 
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
-```Mergit: my GitHub account mehdi205-png is claimed by 0x7d7b8c3a114090dfaf705d54316479efa12e7cd4 on GIWA Chain.
+## Scope
+
+This repository is a technical demonstration of on-chain development and GitHub-integrated verification workflows on GIWA Sepolia.
+
+It is intended as a reproducible development record rather than a production financial application.
